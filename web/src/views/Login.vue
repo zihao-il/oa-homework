@@ -55,7 +55,6 @@ export default {
                     }
 
                     const {data} = await login(loginForm.form)
-                    console.log(data)
                     if (data.status === 0) {
                         window.localStorage.setItem('username', loginForm.form.username)
                         window.localStorage.setItem('token', data.token)
