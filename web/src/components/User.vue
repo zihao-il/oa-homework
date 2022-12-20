@@ -26,8 +26,8 @@
             <el-table-column label="昵称" prop="nick_name"></el-table-column>
             <el-table-column label="用户类型" prop="role">
                 <template #default="scope">
-                    <el-tag v-if="scope.row.role === '管理员'"  effect="dark" round type="success">管理员</el-tag>
-                    <el-tag v-else  effect="dark" round type="info">普通用户</el-tag>
+                    <el-tag v-if="scope.row.role === '管理员'" effect="dark" round type="success">管理员</el-tag>
+                    <el-tag v-else effect="dark" round type="info">普通用户</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="400px">

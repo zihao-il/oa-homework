@@ -9,7 +9,8 @@
                     <el-col :span="4">
                         <el-dropdown>
                         <span class="el-dropdown-link">
-                         {{ roleName }}：{{ username }}<el-icon class="el-icon--right"><arrow-down/></el-icon>
+                         {{ getUserInfo.names.roleName }}：{{ getUserInfo.names.username }}<el-icon
+                            class="el-icon--right"><arrow-down/></el-icon>
                         </span>
                             <template #dropdown>
                                 <el-dropdown-menu>
@@ -52,8 +53,10 @@
 </template>
 
 <script>
-import {computed, ref} from 'vue'
+import {computed, reactive, ref} from 'vue'
 import {getUser} from "@/api/user";
+import router from "@/router";
+import {ElMessage} from "element-plus";
 
 export default {
     setup() {
@@ -118,40 +121,42 @@ export default {
             activePath.value = path;
         }
 
-        return {menus, asideWidth, isCollapse, menuToggleHandler, saveNavState, activePath}
-    },
-    data() {
-        return {
-            roleName: '',
-            username: '',
-        }
-    },
-    created() {
-        this.getUser()
-    },
-    methods: {
-        async getUser() {
-            let username = window.localStorage.getItem('username')
-            const {data: data} = await getUser(username)
-            if (data.status === 0) {
-                this.roleName = data.data.role
-                if (data.data.nick_name === null) {  // 优先显示昵称
-                    this.username = data.data.name
-                } else {
-                    this.username = data.data.nick_name
+        const getUserInfo = reactive({
+            names: {
+                roleName: '',
+                username: '',
+            },
+            getUser: async () => {
+                let username = window.localStorage.getItem('username')
+                const {data: data} = await getUser(username)
+                if (data.status === 0) {
+                    getUserInfo.names.roleName = data.data.role
+                    if (data.data.nick_name === null) {  // 优先显示昵称
+                        this.username = data.data.name
+                    } else {
+                        getUserInfo.names.username = data.data.nick_name
+                    }
                 }
             }
-        },
-        logoutHandler() {
+
+
+        })
+        getUserInfo.getUser()
+
+        function logoutHandler() {
             window.sessionStorage.removeItem('activePath')
             window.localStorage.removeItem('username')
             window.localStorage.removeItem('token')
-            this.$message({
-                message: '已退出登录！',
-                type: 'success'
-            })
-            this.$router.push('/login')
-        },
+            ElMessage({message: "已退出登录！", type: "success"});
+            router.push('/login')
+        }
+
+        return {
+            menus, asideWidth,
+            isCollapse, menuToggleHandler,
+            saveNavState, activePath,
+            logoutHandler, getUserInfo
+        }
     }
 }
 </script>
