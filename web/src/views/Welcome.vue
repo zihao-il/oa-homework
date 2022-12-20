@@ -8,7 +8,7 @@
             />
         </template>
         <template #extra>
-            <el-button type="primary"><a href="#">点我</a></el-button>
+            <el-button type="primary"><a href="https://github.com/zihao-il/oa-homework">点我</a></el-button>
         </template>
     </el-result>
 
