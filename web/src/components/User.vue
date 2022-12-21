@@ -120,8 +120,16 @@ export default {
 
         async function getUserList() {
             const {data} = await getUserLists(queryInfo)
-            users.value = data.data
-            total.value = data.total
+            if (data.status === 0) {
+                users.value = data.data
+                total.value = data.total
+                ElMessage({message: data.message, type: "success"});
+
+            } else {
+                ElMessage({message: '获取用户数据失败！', type: "error"});
+
+            }
+
         }
 
         getUserList()

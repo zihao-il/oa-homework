@@ -153,8 +153,16 @@ export default {
 
         async function getContactList() {
             const {data} = await getContactLists(queryInfo)
-            contacts.value = data.data
-            total.value = data.total
+            if (data.status === 0) {
+                contacts.value = data.data
+                total.value = data.total
+                ElMessage({message: data.message, type: "success"});
+
+            } else {
+                ElMessage({message: '获取用户数据失败！', type: "error"});
+
+            }
+
         }
 
         getContactList()

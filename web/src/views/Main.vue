@@ -9,12 +9,14 @@
                     <el-col :span="4">
                         <el-dropdown>
                         <span class="el-dropdown-link">
-                         {{ getUserInfo.names.roleName }}：{{ getUserInfo.names.username }}<el-icon
-                            class="el-icon--right"><arrow-down/></el-icon>
+                            <el-tag size="large" hit color="#409eff" effect="Light">{{
+                                    getUserInfo.names.roleName
+                                }}：{{ getUserInfo.names.username }}<el-icon class="el-icon--right"><arrow-down/></el-icon></el-tag>
                         </span>
                             <template #dropdown>
                                 <el-dropdown-menu>
-                                    <el-dropdown-item @click="logoutHandler">退出系统
+                                    <el-dropdown-item @click="logoutHandler">
+                                        退出系统
                                     </el-dropdown-item>
                                 </el-dropdown-menu>
                             </template>
@@ -169,6 +171,11 @@ export default {
         color: #FFFFFF;
         font-size: 15px;
         line-height: 60px;
+
+        .el-tag {
+            color: #FFFFFF;
+            font-size: 15px;
+        }
     }
 
     .example-showcase .el-dropdown + .el-dropdown {
@@ -239,7 +246,7 @@ export default {
 }
 
 .toggle-button {
-    background-color: #8E93A0;
+    background-color: #5C5C5C;
     color: #FFFFFF;
     font-size: 10px;
     height: 24px;
