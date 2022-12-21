@@ -28,7 +28,7 @@ exports.update_contact_schema = {
         weixin: joi.string().empty(''),
         company: joi.string().empty(''),
         address: joi.string().empty(''),
-        post_code: joi.string().pattern(/^[1-9]{5}$/).empty(''),
+        post_code: joi.string().pattern(/^[0-9]{5}$/).empty(''),
 
     }
 }

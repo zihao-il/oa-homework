@@ -2,16 +2,45 @@ const db = require('../db/index')
 
 
 exports.get_contact = (req, res) => {
-    db.query('SELECT * FROM tb_contact', (err, rows) => {
-            if (err) return res.fail(err)
-            res.send({
-                status: 0,
-                message: '获取联系人信息成功！',
-                data: rows,
-            })
+
+    db.query('SELECT role FROM tb_user WHERE id =?', [req.auth.id], (err, rows) => {
+        if (err) return res.fail(err)
+        let query = ''
+        let userId=''
+        if (req.body.query === null || req.body.query === undefined) {
+            query = '%%'
+        } else {
+            query = `%${req.body.query}%`
         }
-    )
+        if (rows[0].role === '管理员') {   // 管理可以查看所有的联系人
+            userId= ''
+        }else {
+            userId= `user_id=${req.auth.id} AND`  // 普通用户只能查看自己拥有的联系人
+        }
+
+        let sql = `SELECT * FROM tb_contact WHERE ${userId}  name LIKE '${query}' LIMIT ${(req.body.pagenum-1)*req.body.pagesize}, ${req.body.pagesize}`
+        let total_sql = `SELECT COUNT(*) AS total FROM tb_contact WHERE ${userId} name LIKE '${query}'`
+
+        db.query(sql, (err, rows) => {
+                if (err) return res.fail(err)
+                let data_row = rows
+                db.query(total_sql, (err, rows) => {
+                    if (err) return res.fail(err)
+                    res.send({
+                        status: 0,
+                        message: '获取联系人信息成功！',
+                        total: rows[0].total,
+                        data: data_row
+                    })
+                })
+
+            }
+        )
+
+    })
 }
+
+
 
 exports.add_contact = (req, res) => {
 
@@ -79,6 +108,5 @@ exports.delete_contact = (req, res) => {
 
         }
     })
-
 
 }

@@ -13,9 +13,21 @@ exports.getUserInfo = (req, res) => {
         }
     )
 }
+exports.get_role = (req, res) => {
+    db.query('SELECT role FROM tb_user WHERE id=?', [req.auth.id], (err, rows) => {
+            if (err) return res.fail(err)
+            res.send({
+                status: 0,
+                message: '获取用户权限成功！',
+                data: rows[0]
+            })
+        }
+    )
+}
 
 
 exports.get_user = (req, res) => {
+
     db.query('SELECT role FROM tb_user WHERE id =?', [req.auth.id], (err, rows) => {
             if (err) return res.fail(err)
             if (rows[0].role === '管理员') {   // 判断权限
@@ -25,43 +37,26 @@ exports.get_user = (req, res) => {
                 } else {
                     query = `%${req.body.query}%`
                 }
-                // 利用模糊查询实现搜索功能，用LIMIT实现分页功能
+                // 利用模糊查询实现搜索功能，用LIMIT实现分页功能 COUNT数据获取总数
                 let sql = `SELECT id,name,nick_name,role FROM tb_user WHERE name LIKE '${query}' LIMIT ${(req.body.pagenum-1)*req.body.pagesize}, ${req.body.pagesize}`
+                let sql_total = `SELECT COUNT(*) AS total FROM tb_user WHERE name LIKE '${query}'`
                 db.query(sql, (err, rows) => {
                     if (err) res.fail(err)
-                    res.send({
-                        status: 0,
-                        message: '获取用户数据成功！',
-                        data: rows
+                    let data_row = rows
+                    db.query(sql_total, (err, rows) => {
+                        res.send({
+                            status: 0,
+                            message: '获取用户数据成功！',
+                            total: rows[0].total,
+                            data: data_row
 
+                        })
                     })
+
                 })
 
             } else {
                 return res.fail('无权限获取用户数据！')
-            }
-
-        }
-    )
-}
-
-exports.get_user_total = (req, res) => {
-    db.query('SELECT role FROM tb_user WHERE id =?', [req.auth.id], (err, rows) => {
-            if (err) return res.fail(err)
-            if (rows[0].role === '管理员') {   // 判断权限
-                // 获取用户表总数，不清楚如何获取只能写个api了，为了分页功能
-                db.query('SELECT COUNT(*) AS total FROM tb_user', (err, rows) => {
-                    if (err) res.fail(err)
-                    res.send({
-                        status: 0,
-                        message: '获取用户总数数据成功！',
-                        total: rows[0].total
-
-                    })
-                })
-
-            } else {
-                return res.fail('无权限获取用户总数数据！')
             }
 
         }

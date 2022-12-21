@@ -1,7 +1,7 @@
 <template>
 
 
-    <el-result title="233" sub-title="github地址">
+    <el-result title="github地址" sub-title="https://github.com/zihao-il/oa-homework">
         <template #icon>
             <el-image
                 src="/favicon.ico"

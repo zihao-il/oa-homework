@@ -11,7 +11,7 @@ router.post('/userinfo', userInfoHandler.getUserInfo)
 
 router.post('/get_user', userInfoHandler.get_user)
 
-router.post('/get_user_total', userInfoHandler.get_user_total)
+router.post('/get_role', userInfoHandler.get_role)
 
 router.post('/add_user', expressjoi(add_user_schema), userInfoHandler.add_user)
 

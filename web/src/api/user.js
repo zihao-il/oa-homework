@@ -10,18 +10,19 @@ export const getUser = (username) => {
         }
     })
 }
-export const getUserTotal = () => {
-    return request({
-        url: 'my/get_user_total',
-        method: 'post',
-    })
-}
 
 export const getUserLists = (params) => {
     return request({
         url: 'my/get_user',
         method: 'post',
         data: params
+    })
+}
+
+export const getRole = () => {
+    return request({
+        url: 'my/get_role',
+        method: 'post',
     })
 }
 

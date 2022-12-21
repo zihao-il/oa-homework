@@ -1,7 +1,7 @@
 <template>
     <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user' }">用户管理</el-breadcrumb-item>
         <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -30,7 +30,7 @@
                     <el-tag v-else effect="dark" round type="info">普通用户</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="400px">
+            <el-table-column label="操作" width="200px">
                 <template #default="scope">
                     <el-button type="primary" icon="Edit" @click="editDialog.show(scope.row)">编辑</el-button>
                     <el-button type="danger" icon="Delete" @click="delUserById(scope.row)">删除</el-button>
@@ -105,7 +105,7 @@
 
 <script>
 import {reactive, ref} from 'vue';
-import {addUser, delUser, editUser, getUserLists, getUserTotal} from '@/api/user'
+import {addUser, delUser, editUser, getUserLists} from '@/api/user'
 import {ElMessage, ElMessageBox} from 'element-plus'
 
 export default {
@@ -120,9 +120,8 @@ export default {
 
         async function getUserList() {
             const {data} = await getUserLists(queryInfo)
-            const TotalData = await getUserTotal()
             users.value = data.data
-            total.value = TotalData.data.total
+            total.value = data.total
         }
 
         getUserList()
