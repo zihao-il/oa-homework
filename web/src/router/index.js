@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "../views/Login.vue";
+import SignIn from "../views/Signin.vue";
 import Main from "../views/Main.vue";
 import Welcome from "../views/welcome.vue";
 import User from "../components/User.vue";
@@ -13,10 +13,10 @@ import Schedule from "../components/Schedule.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: "/", redirect: "/login" },
+    { path: "/", redirect: "/signin" },
     {
-      path: "/login",
-      component: Login,
+      path: "/signin",
+      component: SignIn,
     },
     {
       path: "/main",
@@ -36,10 +36,10 @@ const router = createRouter({
   ],
 });
 router.beforeEach((to, from, next) => {
-  if (to.path === "/login") return next();
+  if (to.path === "/signin") return next();
   const token = window.localStorage.getItem("token");
   if (!token) {
-    return next("/login");
+    return next("/signin");
   }
   next();
 });

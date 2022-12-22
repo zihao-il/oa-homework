@@ -150,7 +150,7 @@ export default {
             window.localStorage.removeItem('username')
             window.localStorage.removeItem('token')
             ElMessage({message: "已退出登录！", type: "success"});
-            router.push('/login')
+            router.push('/signin')
         }
 
         return {
