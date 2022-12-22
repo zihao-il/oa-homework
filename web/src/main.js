@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 const app = createApp(App);
+import 'default-passive-events'
+
 
 // 引入 全局样式
 import "./assets/base.css";

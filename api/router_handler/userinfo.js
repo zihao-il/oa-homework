@@ -13,6 +13,40 @@ exports.getUserInfo = (req, res) => {
         }
     )
 }
+
+exports.change_password = (req, res) => {
+    let isRole = false
+    db.query('SELECT role FROM tb_user WHERE id =?', [req.body.id], (err, rows) => {
+        if (err) return res.fail(err)
+        if (rows[0].length === 0) return res.fail('用户不存在！')
+        if (rows[0].role === '管理员' && Number(req.body.id) !== req.auth.id) {
+            isRole = true
+        }
+
+    })
+    db.query('SELECT role FROM tb_user WHERE id =?', [req.auth.id], (err, rows) => {
+        if (err) return res.fail(err)
+        if (rows[0].length === 0) return res.fail('用户不存在！')
+        if (rows[0].role === '管理员') {
+            if (isRole) {
+                return res.fail('无权修改其他管理员的密码！')
+            } else {
+                let password = bcrypt.hashSync(req.body.password, 10)
+                let sql = `UPDATE tb_user SET password='${password}' WHERE id =${req.body.id}`
+                db.query(sql, (err, rows) => {
+                        if (err) return res.fail(err)
+                        res.send({
+                            status: 0,
+                            message: '修改用户密码成功！',
+                        })
+                    }
+                )
+
+            }
+        }
+    })
+
+}
 exports.get_role = (req, res) => {
     db.query('SELECT role FROM tb_user WHERE id=?', [req.auth.id], (err, rows) => {
             if (err) return res.fail(err)

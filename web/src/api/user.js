@@ -19,6 +19,14 @@ export const getUserLists = (params) => {
     })
 }
 
+export const changePasswords = (params) => {
+    return request({
+        url: 'my/change_password',
+        method: 'post',
+        data: params
+    })
+}
+
 export const getRole = () => {
     return request({
         url: 'my/get_role',

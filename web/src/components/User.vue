@@ -1,8 +1,8 @@
 <template>
     <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/user' }">用户管理</el-breadcrumb-item>
-        <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user' }">用户列表管理</el-breadcrumb-item>
+
     </el-breadcrumb>
 
     <el-card>
@@ -30,10 +30,11 @@
                     <el-tag v-else effect="dark" round type="info">普通用户</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="200px">
+            <el-table-column label="操作" width="300px">
                 <template #default="scope">
                     <el-button type="primary" icon="Edit" @click="editDialog.show(scope.row)">编辑</el-button>
-                    <el-button type="danger" icon="Delete" @click="delUserById(scope.row)">删除</el-button>
+                    <el-button type="warning" icon="Warning" @click="passwordDialog.show(scope.row)">改密</el-button>
+                    <el-button type="danger" icon="Delete" @click="delUsers(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -100,12 +101,36 @@
         </template>
     </el-dialog>
 
+    <el-dialog title="修改用户密码" v-model="passwordDialog.visible" @close="passwordDialog.dialogClosed">
+        <el-form ref="passwordFormRef" :rules="passwordDialog.formRules" :model="passwordDialog.form"
+                 label-width="80px">
+            <el-form-item label="ID" prop="id">
+                <el-input v-model="passwordDialog.form.id" disabled autocomplete="off"/>
+            </el-form-item>
+            <el-form-item label="姓名" prop="name">
+                <el-input v-model="passwordDialog.form.name" disabled autocomplete="off"/>
+            </el-form-item>
+            <el-form-item label="新密码" prop="password">
+                <el-input v-model="passwordDialog.form.password" type="password" show-password autocomplete="off"/>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="againPassword">
+                <el-input v-model="passwordDialog.form.againPassword" type="password" show-password autocomplete="off"/>
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <el-button @click="passwordDialog.cancelDialog">取消</el-button>
+            <el-button type="primary" @click="passwordDialog.changePassword">
+                确定
+            </el-button>
+        </template>
+    </el-dialog>
+
 
 </template>
 
 <script>
 import {reactive, ref} from 'vue';
-import {addUser, delUser, editUser, getUserLists} from '@/api/user'
+import {addUser, changePasswords, delUser, editUser, getUserLists} from '@/api/user'
 import {ElMessage, ElMessageBox} from 'element-plus'
 
 export default {
@@ -165,7 +190,7 @@ export default {
                 ],
                 password: [
                     {required: true, message: "请输入密码", trigger: "blur"},
-                    {min: 6, max: 16, message: "密码在6-12个字符之间", trigger: "blur",}
+                    {min: 6, max: 16, message: "密码在6-16个字符之间", trigger: "blur",}
                 ],
                 againPassword: [
                     {required: true, message: "请输入确认密码", trigger: "blur"},
@@ -261,8 +286,74 @@ export default {
         })
 
 
+        const passwordFormRef = ref()
+        const passwordDialog = reactive({
+            visible: false,
+            form: {
+                id: '',
+                name: '',
+                password: '',
+                againPassword: '',
+            },
+            formRules: {
+                id: [
+                    {required: true, message: "请输入用户ID", trigger: "blur"},
+                ],
+                name: [
+                    {required: true, message: "请输入用户名称", trigger: "blur"},
+                    {min: 2, max: 10, message: "用户名在2-10个字符之间", trigger: "blur",}
+                ],
+                password: [
+                    {required: true, message: "请输入密码", trigger: "blur"},
+                    {min: 6, max: 16, message: "密码在6-16个字符之间", trigger: "blur",}
+                ],
+                againPassword: [
+                    {required: true, message: "请输入确认密码", trigger: "blur"},
+                    {min: 6, max: 16, message: "确认密码在6-16个字符之间", trigger: "blur",},
+                    {
+                        validator: (rule, value, cb) => {
+                            if (value === passwordDialog.form.password) {
+                                return cb()
+                            }
+                            cb(new Error('两次输入的密码不一致'))
+                        }, message: "两次输入的密码不一致", trigger: "blur",
+                    }
+                ],
+            },
+            dialogClosed: () => {
+                passwordFormRef.value.resetFields()
+            },
+            show: (row) => {
+                passwordDialog.visible = true
+                passwordDialog.form = {...row}
+            },
+            changePassword: () => {
+                passwordFormRef.value.validate(async (valid) => {
+                    if (!valid) {
+                        return ElMessage({message: "用户密码填写错误！", type: "error"});
+                    }
+
+                    const {data} = await changePasswords(passwordDialog.form);
+
+                    if (data.status === 0) {
+                        ElMessage({message: data.message, type: "success"});
+                    } else {
+
+                        ElMessage({message: data.message, type: "error"});
+                    }
+                    editDialog.visible = false
+                    await getUserList();
+                    passwordDialog.visible = false
+                })
+            },
+            cancelDialog: () => {
+                ElMessage({message: "取消修改用户密码！", type: "info"});
+                passwordDialog.visible = false
+            }
+        })
+
         // 删除用户
-        async function delUserById(row) {
+        async function delUsers(row) {
             const confirmResult = await ElMessageBox({
                 confirmButtonText: "确认删除",
                 cancelButtonText: "取消",
@@ -290,7 +381,8 @@ export default {
             handleSizeChange, handleCurrentChange, total,
             addDialog, addFormRef,
             editDialog, editFormRef,
-            delUserById,
+            passwordDialog, passwordFormRef,
+            delUsers,
         }
     }
 }

@@ -2,8 +2,7 @@
 
     <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/contact' }">联系人管理</el-breadcrumb-item>
-        <el-breadcrumb-item>联系人列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/contact' }">联系人列表管理</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
         <el-row :gutter="20">
@@ -35,7 +34,7 @@
             <el-table-column label="操作" width="200px">
                 <template #default="scope">
                     <el-button type="primary" icon="Edit" @click="editDialog.show(scope.row)">编辑</el-button>
-                    <el-button type="danger" icon="Delete" @click="delContactById(scope.row)">删除</el-button>
+                    <el-button type="danger" icon="Delete" @click="delContacts(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -267,7 +266,7 @@ export default {
             formRules: {
                 user_id: [
                     {required: true, message: "请输入所属用户ID", trigger: "blur"},
-                    {pattern: /^1+$/, message: "所属用户ID格式错误", trigger: "blur",}
+                    {pattern: /^[0-9]{1,6}$/, message: "所属用户ID格式错误", trigger: "blur",}
                 ],
                 name: [
                     {required: true, message: "请输入姓名", trigger: "blur"},
@@ -331,7 +330,7 @@ export default {
 
 
         // 删除联系人
-        async function delContactById(row) {
+        async function delContacts(row) {
             const confirmResult = await ElMessageBox({
                 confirmButtonText: "确认删除",
                 cancelButtonText: "取消",
@@ -359,7 +358,7 @@ export default {
             handleSizeChange, handleCurrentChange, total,
             addDialog, addFormRef,
             editDialog, editFormRef,
-            delContactById,
+            delContacts,
         }
     }
 }

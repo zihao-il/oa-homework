@@ -9,7 +9,7 @@
                     <el-col :span="4">
                         <el-dropdown>
                         <span class="el-dropdown-link">
-                            <el-tag size="large" hit color="#409eff" effect="Light">{{
+                            <el-tag size="large" hit color="#409eff" effect="light">{{
                                     getUserInfo.names.roleName
                                 }}：{{ getUserInfo.names.username }}<el-icon class="el-icon--right"><arrow-down/></el-icon></el-tag>
                         </span>

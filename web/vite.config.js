@@ -26,6 +26,16 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/my/, ""),
       },
+      "/addr": {
+        target: "http://127.0.0.1:9090/addr/",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/addr/, ""),
+      },
+      "/log": {
+        target: "http://127.0.0.1:9090/log/",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/log/, ""),
+      },
     },
   },
 });

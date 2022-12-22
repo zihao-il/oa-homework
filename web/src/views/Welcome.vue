@@ -1,5 +1,7 @@
 <template>
-
+    <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
+    </el-breadcrumb>
 
     <el-result title="github地址" sub-title="https://github.com/zihao-il/oa-homework">
         <template #icon>

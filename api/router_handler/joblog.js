@@ -1,15 +1,41 @@
 const db = require('../db/index')
 
 exports.get_joblog = (req, res) => {
-    db.query('SELECT * FROM tb_job_log', (err, rows) => {
-            if (err) return res.fail(err)
-            res.send({
-                status: 0,
-                message: '获取日志信息成功！',
-                data: rows,
-            })
+    db.query('SELECT role FROM tb_user WHERE id =?', [req.auth.id], (err, rows) => {
+        if (err) return res.fail(err)
+        let query = ''
+        let userId=''
+        if (req.body.query === null || req.body.query === undefined) {
+            query = '%%'
+        } else {
+            query = `%${req.body.query}%`
         }
-    )
+        if (rows[0].role === '管理员') {
+            userId= ''
+        }else {
+            userId= `user_id=${req.auth.id} AND`
+        }
+
+        let sql = `SELECT * FROM tb_job_log WHERE ${userId}  title LIKE '${query}' LIMIT ${(req.body.pagenum-1)*req.body.pagesize}, ${req.body.pagesize}`
+        let total_sql = `SELECT COUNT(*) AS total FROM tb_job_log WHERE ${userId} title LIKE '${query}'`
+        db.query(sql, (err, rows) => {
+                if (err) return res.fail(err)
+                let data_row = rows
+                db.query(total_sql, (err, rows) => {
+                    if (err) return res.fail(err)
+                    res.send({
+                        status: 0,
+                        message: '获取日志信息成功！',
+                        total: rows[0].total,
+                        data: data_row
+                    })
+                })
+
+            }
+        )
+
+    })
+
 }
 
 

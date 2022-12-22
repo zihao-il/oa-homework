@@ -16,8 +16,16 @@ exports.add_user_schema = {
         id: joi.number().integer().min(1).empty(''),
         name: joi.string().required(),
         nick_name: joi.string().empty(''),
-        password: joi.string().pattern(/^[\S]{6,12}$/).required(),
+        password: joi.string().pattern(/^[\S]{6,16}$/).required(),
         role: joi.string().valid('管理员', '普通用户').empty('').default('普通用户'),
+    }
+}
+
+exports.change_password_schema = {
+    body: {
+        id: joi.number().integer().min(1).empty(''),
+        name: joi.string().required(),
+        password: joi.string().pattern(/^[\S]{6,16}$/).required(),
     }
 }
 
