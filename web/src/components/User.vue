@@ -324,8 +324,15 @@ export default {
                 passwordFormRef.value.resetFields()
             },
             show: (row) => {
-                passwordDialog.visible = true
-                passwordDialog.form = {...row}
+
+                let loginName = window.localStorage.getItem('username')
+                if ((loginName === row.name && row.role === '管理员') || row.role === '普通用户') {
+                    passwordDialog.visible = true
+                    passwordDialog.form = {...row}
+                } else {
+                    ElMessage({message: "无权修改其他管理员的密码！", type: "error"});
+                }
+
             },
             changePassword: () => {
                 passwordFormRef.value.validate(async (valid) => {
