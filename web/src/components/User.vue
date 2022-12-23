@@ -21,10 +21,13 @@
         </el-row>
         <el-table :data="users" border stripe>
             <el-table-column type="index"></el-table-column>
-            <el-table-column label="ID" prop="id"></el-table-column>
+            <el-table-column sortable label="ID" prop="id"></el-table-column>
             <el-table-column label="姓名" prop="name"></el-table-column>
             <el-table-column label="昵称" prop="nick_name"></el-table-column>
-            <el-table-column label="用户类型" prop="role">
+            <el-table-column sortable :filters="[
+             { text: '管理员', value: '管理员' },
+             { text: '普通用户', value: '普通用户' },
+            ]" :filter-method="filterTag" label="用户类型" prop="role">
                 <template #default="scope">
                     <el-tag v-if="scope.row.role === '管理员'" effect="dark" round type="success">管理员</el-tag>
                     <el-tag v-else effect="dark" round type="info">普通用户</el-tag>
@@ -68,7 +71,7 @@
         </el-form>
         <template #footer>
             <el-button @click="addDialog.cancelDialog">取消</el-button>
-            <el-button type="primary" @click="addDialog.addUser">
+            <el-button type="primary" @click="addDialog.addUserText">
                 确定
             </el-button>
         </template>
@@ -135,6 +138,9 @@ import {ElMessage, ElMessageBox} from 'element-plus'
 
 export default {
     setup() {
+        const filterTag = (value, row) => {
+            return row.role === value
+        }
         const queryInfo = reactive({
             query: '',
             pagenum: 1,
@@ -209,7 +215,7 @@ export default {
                 addFormRef.value.resetFields()
             },
 
-            addUser: () => {
+            addUserText: () => {
                 addFormRef.value.validate(async (valid) => {
                     if (!valid) {
                         return ElMessage({message: "用户信息填写错误！", type: "error"});
@@ -389,7 +395,7 @@ export default {
             addDialog, addFormRef,
             editDialog, editFormRef,
             passwordDialog, passwordFormRef,
-            delUsers,
+            delUsers, filterTag
         }
     }
 }

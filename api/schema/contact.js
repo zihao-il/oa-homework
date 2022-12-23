@@ -20,6 +20,7 @@ exports.add_contact_schema = {
 exports.update_contact_schema = {
     body: {
         id: joi.number().integer().min(1).required(),
+        user_id: joi.number().integer().min(1).required(),
         name: joi.string().required(),
         sex: joi.string().valid('男', '女'),
         mobile: joi.string().pattern(/^[0-9]{11}$/).required(),

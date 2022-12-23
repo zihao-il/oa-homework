@@ -29,20 +29,26 @@ app.use(expressjwt({
     algorithms: ["HS256"],
     secret: config.jwtSecretKey
 }).unless({
-    path: [/\/api\//]
+    path: ["/api/private/v1/login"]
 }))
 
 const userRouter = require('./router/user')
-app.use('/api', userRouter)
+app.use('/api/private/v1/', userRouter)
 
 const userInfoRouter = require('./router/userinfo')
-app.use('/my', userInfoRouter)
+app.use('/api/private/v1/my', userInfoRouter)
 
 const addrInfoRouter = require('./router/contact')
-app.use('/addr', addrInfoRouter)
+app.use('/api/private/v1/addr', addrInfoRouter)
 
 const logInfoRouter = require('./router/joblog')
-app.use('/log', logInfoRouter)
+app.use('/api/private/v1/log', logInfoRouter)
+
+const scheduleInfoRouter = require('./router/schedule')
+app.use('/api/private/v1/schedules', scheduleInfoRouter)
+
+
+
 
 app.listen(9090, () => {
     console.log('办公自动化系统，监听9090');

@@ -11,7 +11,7 @@
  Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 22/12/2022 14:50:02
+ Date: 23/12/2022 22:16:15
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `tb_contact`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `contact_user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `contact_user_id` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1009 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1012 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_contact
@@ -226,12 +226,10 @@ INSERT INTO `tb_contact` VALUES (233, 14, '谭子韬', '男', '15201469021', 'ta
 INSERT INTO `tb_contact` VALUES (234, 12, '郑睿', '男', '15613834931', 'zheru508@icloud.com', '451264270', 'kv5rSpJswF', '晓明有限责任公司', '75 徐汇区虹桥路', '81100');
 INSERT INTO `tb_contact` VALUES (235, 7, '胡秀英', '女', '17464701292', 'xhu@icloud.com', '4604595593', 'wxDe8cSOxW', '云熙有限责任公司', '824 成华区玉双路6号', '45369');
 INSERT INTO `tb_contact` VALUES (237, 14, '杨杰宏', '男', '19271150486', 'jiehongyang9@icloud.com', '1879697417', 'mRnRFeMsW8', '秀英电子有限责任公司', '825 西城区西長安街', '92328');
-INSERT INTO `tb_contact` VALUES (238, 12, '唐睿', '男', '17565577960', 'tangrui@hotmail.com', '9562786228', 'QezgNOpJtu', '谭有限责任公司', '848 東城区東直門內大街', '28927');
-INSERT INTO `tb_contact` VALUES (239, 6, '戴杰宏', '男', '15406416622', 'daij@outlook.com', '925030440', 'WT8emmoBbh', '谢記电脑有限责任公司', '651 环区南街二巷', '26555');
+INSERT INTO `tb_contact` VALUES (238, 1, '唐睿', NULL, '11111111111', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_contact` VALUES (239, 5, '戴杰宏', '男', '15406416622', 'daij@outlook.com', '925030440', 'WT8emmoBbh', '谢記电脑有限责任公司', '651 环区南街二巷', '26555');
 INSERT INTO `tb_contact` VALUES (240, 12, '尹杰宏', '男', '11623374916', 'jy1957@gmail.com', '2744732698', 'YyVtG6HIpt', '薛有限责任公司', '957 朝阳区三里屯路', '28739');
 INSERT INTO `tb_contact` VALUES (241, 9, '于宇宁', '男', '17511000660', 'yuning110@outlook.com', '936950448', 'Czmw1gOPwQ', '震南有限责任公司', '815 東城区東直門內大街', '29248');
-INSERT INTO `tb_contact` VALUES (1003, 3, '董云熙', '男', '16385959310', 'dongyunxi@gmail.com', '433587356', '7XrF5stavj', '詩涵电讯有限责任公司', '509 朝阳区三里屯路', '49613');
-INSERT INTO `tb_contact` VALUES (1004, 12, '薛睿', '男', '17165860999', 'xuer6@gmail.com', '810226995', 'OegbmCI99V', '尹記系统有限责任公司', '154 白云区小坪东路', '25850');
 
 -- ----------------------------
 -- Table structure for tb_job_log
@@ -246,7 +244,7 @@ CREATE TABLE `tb_job_log`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `job_log_user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `job_log_user_id` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 207 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 212 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_job_log
@@ -284,7 +282,6 @@ INSERT INTO `tb_job_log` VALUES (31, 14, '2022-03-20 17:49:05', '日志标题3',
 INSERT INTO `tb_job_log` VALUES (32, 13, '2022-04-10 02:04:36', '日志标题8', '日志内容0');
 INSERT INTO `tb_job_log` VALUES (33, 3, '2022-05-12 05:42:48', '日志标题5', '日志内容5');
 INSERT INTO `tb_job_log` VALUES (34, 14, '2022-07-16 01:36:40', '日志标题5', '日志内容6');
-INSERT INTO `tb_job_log` VALUES (35, 9, '2022-05-06 14:44:34', '日志标题3', '日志内容0');
 INSERT INTO `tb_job_log` VALUES (37, 8, '2022-12-05 21:47:20', '日志标题3', '日志内容5');
 INSERT INTO `tb_job_log` VALUES (38, 5, '2022-12-04 05:15:21', '日志标题6', '日志内容1');
 INSERT INTO `tb_job_log` VALUES (39, 1, '2022-10-10 21:11:14', '日志标题5', '日志内容5');
@@ -519,11 +516,42 @@ CREATE TABLE `tb_schedule`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `schedule_user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `schedule_user_id` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_schedule
 -- ----------------------------
+INSERT INTO `tb_schedule` VALUES (1, 3, '2022-04-29 17:59:17', '2022-06-08 15:42:07', '日程标题3', '日程内容6', '重要', '备注4', '2022-02-09 01:13:13', 3, '未开始');
+INSERT INTO `tb_schedule` VALUES (3, 7, '2022-03-16 03:53:58', '2022-09-07 05:18:38', '日程标题2', '日程内容9', '重要', '备注3', '2022-11-24 22:38:20', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (4, 11, '2022-06-17 13:54:00', '2022-12-12 05:42:14', '日程标题7', '日程内容4', '普通', '备注7', '2022-07-02 20:34:37', 1, '进行中');
+INSERT INTO `tb_schedule` VALUES (5, 8, '2022-11-24 06:52:05', '2022-01-23 05:44:48', '日程标题6', '日程内容8', '普通', '备注8', '2022-02-06 09:26:09', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (6, 10, '2022-11-11 21:32:25', '2022-06-18 16:06:05', '日程标题7', '日程内容1', '普通', '备注9', '2022-01-02 07:33:07', 3, '未开始');
+INSERT INTO `tb_schedule` VALUES (7, 10, '2022-05-30 20:03:06', '2022-09-02 15:37:42', '日程标题2', '日程内容1', '普通', '备注1', '2022-08-13 14:29:56', 1, '已结束');
+INSERT INTO `tb_schedule` VALUES (8, 13, '2022-04-24 10:50:32', '2022-08-15 21:22:08', '日程标题7', '日程内容5', '重要', '备注3', '2022-04-03 18:46:21', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (9, 7, '2022-12-07 07:42:09', '2022-11-27 20:42:21', '日程标题2', '日程内容4', '普通', '备注3', '2022-06-15 16:14:39', 1, '进行中');
+INSERT INTO `tb_schedule` VALUES (10, 9, '2022-09-09 23:13:55', '2022-08-08 17:21:01', '日程标题1', '日程内容5', '重要', '备注3', '2022-09-18 01:38:28', 3, '进行中');
+INSERT INTO `tb_schedule` VALUES (11, 6, '2022-12-31 11:30:58', '2022-03-30 09:37:56', '日程标题8', '日程内容5', '重要', '备注1', '2022-09-05 08:04:52', 1, '进行中');
+INSERT INTO `tb_schedule` VALUES (12, 6, '2022-09-21 16:44:36', '2022-12-11 08:20:52', '日程标题3', '日程内容4', '普通', '备注6', '2022-11-18 06:11:43', 1, '已结束');
+INSERT INTO `tb_schedule` VALUES (13, 6, '2022-04-08 07:28:00', '2022-09-24 08:11:57', '日程标题8', '日程内容7', '重要', '备注7', '2022-07-01 15:24:16', 3, '已结束');
+INSERT INTO `tb_schedule` VALUES (14, 9, '2022-08-03 11:53:26', '2022-08-22 23:52:04', '日程标题8', '日程内容2', '重要', '备注9', '2022-07-11 03:33:49', 2, '未开始');
+INSERT INTO `tb_schedule` VALUES (15, 1, '2022-05-02 06:54:53', '2022-05-09 05:20:00', '日程标题8', '日程内容8', '普通', '备注7', '2022-01-29 07:59:10', 2, '进行中');
+INSERT INTO `tb_schedule` VALUES (16, 11, '2022-02-12 19:13:03', '2022-11-29 03:58:20', '日程标题3', '日程内容8', '重要', '备注4', '2022-10-25 14:00:15', 1, '已结束');
+INSERT INTO `tb_schedule` VALUES (17, 12, '2022-08-14 03:48:09', '2022-11-12 19:42:03', '日程标题9', '日程内容9', '普通', '备注8', '2022-07-04 20:04:05', 1, '进行中');
+INSERT INTO `tb_schedule` VALUES (18, 3, '2022-05-07 19:15:52', '2022-05-31 18:20:57', '日程标题1', '日程内容2', '普通', '备注3', '2022-10-13 00:05:50', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (19, 12, '2022-04-07 07:08:41', '2022-02-10 01:13:53', '日程标题6', '日程内容1', '重要', '备注8', '2022-08-25 17:17:16', 1, '已结束');
+INSERT INTO `tb_schedule` VALUES (20, 10, '2022-02-06 09:42:34', '2022-03-24 17:50:26', '日程标题2', '日程内容5', '普通', '备注6', '2022-01-29 05:29:38', 1, '已结束');
+INSERT INTO `tb_schedule` VALUES (21, 3, '2022-04-27 06:26:41', '2022-03-12 19:38:21', '日程标题4', '日程内容8', '普通', '备注5', '2022-11-15 04:04:14', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (22, 14, '2022-07-27 10:40:06', '2022-10-15 12:54:18', '日程标题2', '日程内容9', '普通', '备注8', '2022-05-25 05:44:54', 2, '进行中');
+INSERT INTO `tb_schedule` VALUES (24, 1, '2022-12-07 04:21:21', '2022-04-14 02:31:44', '日程标题5', '日程内容6', '普通', '备注9', '2022-08-25 04:05:42', 3, '已结束');
+INSERT INTO `tb_schedule` VALUES (25, 12, '2022-09-06 22:10:02', '2022-08-28 22:58:17', '日程标题2', '日程内容3', '重要', '备注4', '2022-11-22 22:45:39', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (26, 11, '2022-09-27 12:47:05', '2022-11-10 11:44:56', '日程标题1', '日程内容5', '普通', '备注3', '2022-05-12 00:03:06', 2, '已结束');
+INSERT INTO `tb_schedule` VALUES (27, 11, '2022-05-01 01:39:24', '2022-10-09 19:54:45', '日程标题7', '日程内容8', '普通', '备注6', '2022-12-01 17:17:43', 1, '未开始');
+INSERT INTO `tb_schedule` VALUES (28, 3, '2022-02-14 06:58:30', '2022-10-10 13:48:41', '日程标题7', '日程内容9', '重要', '备注9', '2022-04-13 08:45:01', 1, '进行中');
+INSERT INTO `tb_schedule` VALUES (29, 9, '2022-06-07 01:41:49', '2022-09-28 18:04:28', '日程标题1', '日程内容3', '重要', '备注2', '2022-11-29 08:13:17', 3, '未开始');
+INSERT INTO `tb_schedule` VALUES (30, 12, '2022-12-29 02:57:38', '2022-01-05 07:13:18', '日程标题5', '日程内容4', '普通', '备注6', '2022-08-02 04:11:58', 1, '已结束');
+INSERT INTO `tb_schedule` VALUES (31, 6, '2022-03-09 21:12:47', '2022-08-26 15:40:37', '日程标题7', '日程内容4', '重要', '备注5', '2022-10-28 14:39:15', 3, '已结束');
+INSERT INTO `tb_schedule` VALUES (32, 3, '2022-05-29 13:28:59', '2022-03-30 13:48:50', '日程标题1', '日程内容7', '重要', '备注3', '2022-10-21 21:20:21', 1, '进行中');
+INSERT INTO `tb_schedule` VALUES (33, 5, '2022-07-08 22:34:48', '2022-05-08 09:06:32', '日程标题8', '日程内容4', '普通', '备注8', '2022-01-17 16:30:26', 1, '进行中');
 
 -- ----------------------------
 -- Table structure for tb_user
@@ -536,14 +564,14 @@ CREATE TABLE `tb_user`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '登录密码',
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '普通用户' COMMENT '用户类型（普通用户、管理员）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
 INSERT INTO `tb_user` VALUES (1, 'admin', 'admin', '$2a$10$QeaHC/DzXT.ycDk.VSR0z.lesc3MXhDdmst5VV.jVXZu7Df0gUGqa', '管理员');
 INSERT INTO `tb_user` VALUES (3, '阎安琪', '1111', '$2a$10$2hz9Jsrle7fcdmegGOukj.dcKS3zz4RHhoUYqfgAZcdFmPFuFpJte', '管理员');
-INSERT INTO `tb_user` VALUES (5, '蔡嘉伦', 'Troy Turner', '$2a$10$qpjocsOIMcX02KvmkUXyfui0i1DvmYXStzZeSPEl.I.FMuRmT1DeC', '普通用户');
+INSERT INTO `tb_user` VALUES (5, '蔡嘉伦', 'Troy Turner', '$2a$10$Pk12hN3CGnYQeUZ3H2tSKeLZcni.yn6gj5prjtXXeXgSAYejj4Hsu', '普通用户');
 INSERT INTO `tb_user` VALUES (6, '姜岚', 'Francisco Ortiz', '$2a$10$5vOtFkMomfFxqUCq98JRyedXPHgYsoK3HzmDm9lBKPVeCLCeD7tCK', '普通用户');
 INSERT INTO `tb_user` VALUES (7, '郑云熙', 'Wanda Peterson', 'gQCNUziPWr', '普通用户');
 INSERT INTO `tb_user` VALUES (8, '陆子韬', 'Evelyn Aguilar', 'tGMXbXOjhZ', '普通用户');
@@ -553,6 +581,5 @@ INSERT INTO `tb_user` VALUES (11, '钱岚', 'David Simmons', '0kbgIyaJjd', '普�
 INSERT INTO `tb_user` VALUES (12, '田宇宁', 'Valerie Scott', '6YjT4V7i0b', '普通用户');
 INSERT INTO `tb_user` VALUES (13, '韦秀英', 'Sheila Burns', 'dWeRT7JxhU', '普通用户');
 INSERT INTO `tb_user` VALUES (14, '高子异', 'Clara Collins', 'lENp0GIjop', '普通用户');
-INSERT INTO `tb_user` VALUES (55, '111111', '111', '$2a$10$CLFUFiv2u/smj5IyPhfxIuz4q1PlqdvVgdvFa.rWPMipNE1kldgVC', '普通用户');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -43,6 +43,9 @@ exports.change_password = (req, res) => {
                 )
 
             }
+        } else {
+            return res.fail('无权限修改用户密码！')
+
         }
     })
 

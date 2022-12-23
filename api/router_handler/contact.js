@@ -70,7 +70,7 @@ exports.update_contact = (req, res) => {
     })
     db.query('SELECT user_id FROM tb_contact WHERE id=?', req.body.id, (err, rows) => {
         if (rows[0].user_id === userId || flag) {   // 只允许管理员账户或者所属用户为自己的账号的修改联系人信息
-            db.query('UPDATE tb_contact SET name=?, sex=?, mobile=?, email=?, qq=?, weixin=?, company=?, address=?, post_code=? WHERE id =?', [req.body.name, req.body.sex, req.body.mobile, req.body.email, req.body.qq, req.body.weixin, req.body.company, req.body.address, req.body.post_code, req.body.id], (err, rows) => {
+            db.query('UPDATE tb_contact SET user_id=?, name=?, sex=?, mobile=?, email=?, qq=?, weixin=?, company=?, address=?, post_code=? WHERE id =?', [req.body.user_id, req.body.name, req.body.sex, req.body.mobile, req.body.email, req.body.qq, req.body.weixin, req.body.company, req.body.address, req.body.post_code, req.body.id], (err, rows) => {
                 if (err) res.fail(err)
                 res.send({
                     status: 0,

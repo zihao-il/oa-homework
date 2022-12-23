@@ -66,7 +66,7 @@ exports.update_joblog = (req, res) => {
     })
     db.query('SELECT user_id FROM tb_job_log WHERE id=?', req.body.id, (err, rows) => {
         if (rows[0].user_id === userId || flag) {   // 只允许管理员账户或者所属用户为自己的账号的修改日志信息
-            db.query('UPDATE tb_job_log SET log_time=?, title=?, content=? WHERE id =?', [req.body.log_time, req.body.title, req.body.content, req.body.id], (err, rows) => {
+            db.query('UPDATE tb_job_log SET user_id=?, log_time=?, title=?, content=? WHERE id =?', [req.body.user_id, req.body.log_time, req.body.title, req.body.content, req.body.id], (err, rows) => {
                 if (err) res.fail(err)
                 res.send({
                     status: 0,
@@ -89,8 +89,9 @@ exports.delete_joblog = (req, res) => {
             flag = true
         }
     })
-    db.query('SELECT user_id FROM tb_contact WHERE id=?', req.body.id, (err, rows) => {
-        if (rows[0].user_id === userId || flag) {   // 注释同上
+
+    db.query('SELECT user_id FROM tb_job_log WHERE id=?', req.body.id, (err, rows) => {
+        if (rows[0].user_id === userId || flag) {
             db.query('DELETE FROM tb_job_log WHERE id =?', [req.body.id], (err, rows) => {
                 if (err) res.fail(err)
                 res.send({

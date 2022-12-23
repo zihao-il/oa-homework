@@ -1,11 +1,15 @@
 <template>
+    <div id="bg1" class="bgbox"></div>
+    <div id="bg2" class="bgbox"></div>
+    <div id="bg3" class="bgbox"></div>
     <div class="login_container">
         <div class="login_box">
             <h1>OA后台系统登录</h1>
             <div class="form_box">
                 <el-form :rules="loginForm.loginFormRules" ref="loginFormRef" :model="loginForm.form">
                     <el-form-item prop="username">
-                        <el-input v-model="loginForm.form.username" prefix-icon="User"></el-input>
+                        <el-input v-model="loginForm.form.username" WarningColor='warning'
+                                  prefix-icon="User"></el-input>
                     </el-form-item>
 
                     <el-form-item prop="password">
@@ -68,6 +72,7 @@ export default {
 
             },
             resetHandler: () => {
+                ElMessage({message: '已清空输入框！', type: "success"});
                 loginFormRef.value.resetFields()
             },
 
@@ -84,45 +89,98 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bgbox {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+}
+
+
+#bg1 {
+    z-index: -1;
+    background: url("../img/1.png");
+    animation-name: diybg;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: alternate;
+
+}
+
+#bg2 {
+    z-index: -2;
+    background: url("../img/2.png");
+    animation-name: diybg2;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: alternate;
+
+}
+
+#bg3 {
+    z-index: -3;
+    background: url("../img/3.png");
+}
+
+@keyframes diybg {
+    0% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+
+    75% {
+        opacity: 1;
+    }
+}
+
+@keyframes diybg2 {
+
+    25% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+
+    75% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 h1 {
     text-align: center;
     padding-top: 10%;
 }
 
 .login_container {
-    background-color: #16343b;
     height: 100%;
 }
 
 .login_box {
     width: 450px;
     height: 300px;
-    background: #FFFFFF;
-    border-radius: 3px;
+    background: rgba(255, 255, 255, .8);
+    border-radius: 10px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-}
-
-.avatar_box {
-    height: 130px;
-    width: 130px;
-    border: 1px solid #EEEEEE;
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 0 10px #DDDDDD;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
-
-    img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background-color: #EEEEEE;
-    }
 }
 
 .form_box {
@@ -131,5 +189,6 @@ h1 {
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
+
 }
 </style>

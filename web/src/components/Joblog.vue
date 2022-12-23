@@ -20,9 +20,9 @@
         </el-row>
         <el-table :data="contacts" border stripe>
             <el-table-column type="index"></el-table-column>
-            <el-table-column label="ID" prop="id"></el-table-column>
-            <el-table-column label="所属用户ID" prop="user_id"></el-table-column>
-            <el-table-column label="记录时间" prop="log_time"></el-table-column>
+            <el-table-column sortable  label="ID" prop="id"></el-table-column>
+            <el-table-column sortable label="所属用户ID" prop="user_id"></el-table-column>
+            <el-table-column sortable  label="记录时间" prop="log_time"></el-table-column>
             <el-table-column label="日志标题" prop="title"></el-table-column>
             <el-table-column label="日志内容" prop="content"></el-table-column>
             <el-table-column label="操作" width="200px">
@@ -58,12 +58,12 @@
         </el-form>
         <template #footer>
             <el-button @click="addDialog.cancelDialog">取消</el-button>
-            <el-button type="primary" @click="addDialog.addUser">
+            <el-button type="primary" @click="addDialog.addJobLogText">
                 确定
             </el-button>
         </template>
     </el-dialog>
-    <el-dialog title="添加联系人信息" v-model="editDialog.visible" @close="editDialog.dialogClosed">
+    <el-dialog title="修改工作日志" v-model="editDialog.visible" @close="editDialog.dialogClosed">
         <el-form ref="editFormRef" :rules="editDialog.formRules" :model="editDialog.form" label-width="80px">
             <el-form-item label="所属用户ID" prop="user_id">
                 <el-input v-model="editDialog.form.user_id" :disabled=editDialog.isDisabled autocomplete="off"/>
@@ -80,7 +80,7 @@
         </el-form>
         <template #footer>
             <el-button @click="editDialog.cancelDialog">取消</el-button>
-            <el-button type="primary" @click="editDialog.editUser">
+            <el-button type="primary" @click="editDialog.editJobLogText">
                 确定
             </el-button>
         </template>
@@ -162,7 +162,7 @@ export default {
                 addFormRef.value.resetFields()
             },
 
-            addUser: () => {
+            addJobLogText: () => {
                 addFormRef.value.validate(async (valid) => {
                     if (!valid) {
                         return ElMessage({message: "工作日志填写错误！", type: "error"});
@@ -218,7 +218,7 @@ export default {
             dialogClosed: () => {
                 editFormRef.value.resetFields()
             },
-            editUser: () => {
+            editJobLogText: () => {
                 editFormRef.value.validate(async (valid) => {
                     if (!valid) {
                         return ElMessage({message: "工作日志填写错误！", type: "error"});

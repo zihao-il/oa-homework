@@ -20,8 +20,8 @@
         </el-row>
         <el-table :data="contacts" border stripe>
             <el-table-column type="index"></el-table-column>
-            <el-table-column label="ID" prop="id"></el-table-column>
-            <el-table-column label="所属用户ID" prop="user_id"></el-table-column>
+            <el-table-column sortable  label="ID" prop="id"></el-table-column>
+            <el-table-column sortable label="所属用户ID" prop="user_id"></el-table-column>
             <el-table-column label="姓名" prop="name"></el-table-column>
             <el-table-column label="性别" prop="sex"></el-table-column>
             <el-table-column label="手机号" prop="mobile"></el-table-column>
@@ -81,7 +81,7 @@
         </el-form>
         <template #footer>
             <el-button @click="addDialog.cancelDialog">取消</el-button>
-            <el-button type="primary" @click="addDialog.addUser">
+            <el-button type="primary" @click="addDialog.addContactText">
                 确定
             </el-button>
         </template>
@@ -126,7 +126,7 @@
         </el-form>
         <template #footer>
             <el-button @click="editDialog.cancelDialog">取消</el-button>
-            <el-button type="primary" @click="editDialog.editUser">
+            <el-button type="primary" @click="editDialog.editContactText">
                 确定
             </el-button>
         </template>
@@ -222,7 +222,7 @@ export default {
                 addFormRef.value.resetFields()
             },
 
-            addUser: () => {
+            addContactText: () => {
                 addFormRef.value.validate(async (valid) => {
                     if (!valid) {
                         return ElMessage({message: "联系人信息填写错误！", type: "error"});
@@ -296,7 +296,7 @@ export default {
             dialogClosed: () => {
                 editFormRef.value.resetFields()
             },
-            editUser: () => {
+            editContactText: () => {
                 editFormRef.value.validate(async (valid) => {
                     if (!valid) {
                         return ElMessage({message: "联系人信息填写错误！", type: "error"});
